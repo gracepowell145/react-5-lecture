@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import {withRouter} from 'react-router-dom'//component that takes in another component(called higher order component) take in component, apply from props to that component, then spit that component back out 
 import albums from '../data.json'
 import './style.css'
 
@@ -11,15 +12,39 @@ class SingleAlbum extends Component {
   }
 
   componentDidMount() {
+    const {albumId} = this.props.match.params
+
+    const album = albums.find((element) => element.id === +albumId)
+
+    if (!album){
+      this.props.history.push('/404')
+    }else {
+      this.setState({
+        album: album,
+      })
+    }
     //Find album using match object
   }
-
+//takes in prevProps argument. Can take is prevState also but we don't need that here. prevProps is essentially the previous props in componentDidMount
   componentDidUpdate(prevProps) {
+    const {albumId } = this.props.match.params //this is the current value
+  if(albumId !== prevProps.match.params.albumId){
+      const album = albums.find((element) => element.id === +albumId)
+
+      if(!album){
+        this.props.history.push('/404')
+    }else {
+      this.setState({
+        album: album,
+      })
+    }
     //Check for change in match object and use it to find album
   }
+}
 
   handleBuyAlbum = () => {
     alert('YOU BOUGHT IT')
+    this.props.history.push('/404')
     //Return to home page
   }
 
@@ -41,4 +66,4 @@ class SingleAlbum extends Component {
     )
   }
 }
-export default SingleAlbum
+export default withRouter(SingleAlbum)

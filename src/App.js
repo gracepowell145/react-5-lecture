@@ -1,15 +1,13 @@
 import React from 'react'
 import Header from './components/Header'
-import About from './components/About'
-import AlbumList from './components/AlbumList'
 import './App.css'
+import routes from './routes'
 
 function App() {
   return (
     <div className="App">
       <Header />
-      <About />
-      <AlbumList />
+          {routes}
     </div>
   )
 }
